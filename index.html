@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ファイルのダウンロード</title>
+</head>
+<body>
+    <h1>ファイルのダウンロード</h1>
+    <button onclick="downloadFile()">ファイルをダウンロード</button>
+<h2>これをダウンロードするとまあなんていうのかなmain.pyというアプリがダウンロードされるよ</h2>
+    <h3>できるかは保証できません。</h3>
+    <script>
+        function downloadFile() {
+            // JavaScriptを使用して、サーバー上の
+            var xhr = new XMLHttpRequest();
+            xhr.open("GET", "download.py", true);
+            xhr.responseType = "blob"; // バイナリデータを扱うために必要
+
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    // Blobデータを含むURLを作成し、ダウンロードリンクを生成する
+                    var blob = new Blob([xhr.response], { type: "application/octet-stream" });
+                    var link = document.createElement("a");
+                    link.href = window.URL.createObjectURL(blob);
+                    link.download = "downloaded_file.txt";
+                    link.click();
+                }
+            };
+
+            xhr.send();
+        }
+    </script>
+</body>
+</html>
